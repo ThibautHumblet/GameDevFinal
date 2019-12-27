@@ -41,7 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BuildingBlocks\SpriteClass.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Player\Sprite.cs" />
+    <Compile Include="Player\SpriteManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface\Input.cs" />
