@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final
 {
@@ -24,6 +25,9 @@ namespace ThibautHumblet_GameDev_Final
         Texture2D laag01, laag02, laag03, laag04, laag05, laag06, laag07, laag08, laag09, laag10, laag11;
         static public Vector2 AchtergrondPositie;
         static public Vector2 WolkenPositie_7, WolkenPositie_8, WolkenPositie_9, WolkenPositie_10;
+
+        // input
+        Input input;
 
         public Game1()
         {
@@ -56,6 +60,8 @@ namespace ThibautHumblet_GameDev_Final
             schermH = MainTarget.Height;
             desktopRectangle = new Rectangle(0, 0, pp.BackBufferWidth, pp.BackBufferHeight); // exacte verhouding van het achterliggende scherm zodat er niet per ongeluk vanalles op de desktop kan gebeuren
             schermRectangle = new Rectangle(0, 0, schermB, schermH);
+
+            input = new Input();
 
             base.Initialize();
         }
