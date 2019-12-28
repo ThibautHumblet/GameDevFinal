@@ -55,11 +55,11 @@ namespace ThibautHumblet_GameDev_Final.Map
                 int x = 1;
                 foreach (var character in line)
                 {
-                    var texture = _content.Load<Texture2D>("ground05");
+                    var texture = _content.Load<Texture2D>("noTexture");
 
                     var platform = new Tile(texture)
                     {
-                        Position = new Vector2(x * texture.Width, y * texture.Height),
+                        Position = new Vector2(x * 128, y * 128),
                         Layer = 0.999f,
                     };
 
@@ -131,12 +131,8 @@ namespace ThibautHumblet_GameDev_Final.Map
 
         public override void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
             foreach (var component in _components)
                 component.Draw(gameTime, _spriteBatch);
-
-            _spriteBatch.End();
         }
 
     }

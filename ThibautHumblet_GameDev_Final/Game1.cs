@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
 using ThibautHumblet_GameDev_Final.Animations;
+using ThibautHumblet_GameDev_Final.Cameras;
 using ThibautHumblet_GameDev_Final.Map;
 using ThibautHumblet_GameDev_Final.Sprites;
 using ThibautHumblet_GameDev_Final.UserInterface;
@@ -37,6 +38,10 @@ namespace ThibautHumblet_GameDev_Final
         private State _currentState;
         private GameModel _gameModel;
         private LevelModel _level1;
+
+        private Player player;
+
+        private Camera _camera;
 
         public Game1()
         {
@@ -84,6 +89,8 @@ namespace ThibautHumblet_GameDev_Final
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _camera = new Camera();
+
             // TODO: use this.Content to load your game content here
 
             _gameModel = new GameModel()
@@ -96,7 +103,7 @@ namespace ThibautHumblet_GameDev_Final
             _currentState.LoadContent();
 
             // player inladen
-            var player = new Player(input, new Dictionary<string, Animation>()
+            player = new Player(input, new Dictionary<string, Animation>()
       {
                 { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10) },
                 { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
@@ -164,8 +171,9 @@ namespace ThibautHumblet_GameDev_Final
             if (WolkenPositie_10.X == laag10.Width)
                 WolkenPositie_10.X = 0;
 
+            _camera.Follow(player);
 
-                    _currentState = new PlayingState(_gameModel, _level1);
+            _currentState = new PlayingState(_gameModel, _level1);
                     _currentState.LoadContent();
 
             _currentState.Update(gameTime);
@@ -205,7 +213,9 @@ namespace ThibautHumblet_GameDev_Final
             spriteBatch.Draw(MainTarget, desktopRectangle, Color.White);
             spriteBatch.End();
 
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Transform);
             _currentState.Draw(gameTime);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

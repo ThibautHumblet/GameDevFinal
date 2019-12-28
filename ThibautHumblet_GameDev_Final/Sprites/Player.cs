@@ -214,6 +214,12 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                         this.X = platform.Rectangle.Left - this.Rectangle.Width;
                     }
 
+                    if (onRight)
+                    {
+                        this.X = platform.Rectangle.Right + this.Rectangle.Width;
+                    }
+
+
                     if (onTop)
                     {
                         if (!_jumping)
