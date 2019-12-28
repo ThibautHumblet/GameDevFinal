@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ThibautHumblet_GameDev_Final.UserInterface
 {
-    class Input
+    public class Input
     {
         public KeyboardState keyboard, oldKeyboard;
         public bool shift_down, control_down, alt_down;

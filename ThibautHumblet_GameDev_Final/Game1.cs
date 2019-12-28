@@ -1,6 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
+using ThibautHumblet_GameDev_Final.Animations;
+using ThibautHumblet_GameDev_Final.Cameras;
+using ThibautHumblet_GameDev_Final.Map;
+using ThibautHumblet_GameDev_Final.Sprites;
 using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final
@@ -28,6 +34,14 @@ namespace ThibautHumblet_GameDev_Final
 
         // input
         Input input;
+
+        private State _currentState;
+        private GameModel _gameModel;
+        private LevelModel _level1;
+
+        private Player player;
+
+        private Camera _camera;
 
         public Game1()
         {
@@ -75,10 +89,36 @@ namespace ThibautHumblet_GameDev_Final
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _camera = new Camera();
+
             // TODO: use this.Content to load your game content here
 
+            _gameModel = new GameModel()
+            {
+                ContentManger = Content,
+                GraphicsDeviceManager = graphics,
+                SpriteBatch = spriteBatch,
+            };
+            _currentState = new LevelSelectorState(_gameModel);
+            _currentState.LoadContent();
 
-            // parallax achtergrond inladen
+            // player inladen
+            player = new Player(input, new Dictionary<string, Animation>()
+      {
+                { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10) },
+                { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
+                { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
+                { "Jump", new Animation(Content.Load<Texture2D>("SpritesheetJump"), 12) },
+                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8) },
+      })
+        {
+            Position = new Vector2(300, 100),
+            Layer = 1f,
+        };
+
+            _level1 = new LevelModel(player);
+
+        // parallax achtergrond inladen
             laag01 = Content.Load<Texture2D>("_01_ground");
             laag02 = Content.Load<Texture2D>("_02_trees and bushes");
             laag03 = Content.Load<Texture2D>("_03_distant_trees");
@@ -90,6 +130,7 @@ namespace ThibautHumblet_GameDev_Final
             laag09 = Content.Load<Texture2D>("_09_distant_clouds1");
             laag10 = Content.Load<Texture2D>("_10_distant_clouds");
             laag11 = Content.Load<Texture2D>("_11_background");
+
         }
 
         /// <summary>
@@ -108,7 +149,8 @@ namespace ThibautHumblet_GameDev_Final
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            input.Update();
+            if (input.Keypress(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
@@ -128,6 +170,13 @@ namespace ThibautHumblet_GameDev_Final
             WolkenPositie_10.X++;
             if (WolkenPositie_10.X == laag10.Width)
                 WolkenPositie_10.X = 0;
+
+            _camera.Follow(player);
+
+            _currentState = new PlayingState(_gameModel, _level1);
+                    _currentState.LoadContent();
+
+            _currentState.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -159,8 +208,13 @@ namespace ThibautHumblet_GameDev_Final
             #endregion
 
             GraphicsDevice.SetRenderTarget(null);
+
             spriteBatch.Begin();
             spriteBatch.Draw(MainTarget, desktopRectangle, Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Transform);
+            _currentState.Draw(gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
