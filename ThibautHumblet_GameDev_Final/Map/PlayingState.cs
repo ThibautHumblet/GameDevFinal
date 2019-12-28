@@ -22,17 +22,24 @@ namespace ThibautHumblet_GameDev_Final.Map
 
         private IEnumerable<Sprite> _sprites;
 
+        private TileTypes _tileType;
+
+        private Texture2D _texture;
+
         private List<string> _map
         {
             get
             {
                 return new List<string>()
-        {
-          "00000000000000000000000110000000000000",
-          "00000010000000000000011000000000000000",
-          "00001000000200000001100000000000000000",
-          "11111111111111111110000000000111111111"
-        };
+                {
+                    "00000000000000000000000110000000000000",
+                    "04000010000000000000011000000000000000",
+                    "000010000*0200000001100000000000000000",
+                    "11111111111111111110000000000111111111",
+                    "11112221121112211112211111112211111211",
+                    "66622211655521551152566215662215111211"
+
+                };
             }
         }
 
@@ -55,24 +62,72 @@ namespace ThibautHumblet_GameDev_Final.Map
                 int x = 1;
                 foreach (var character in line)
                 {
-                    var texture = _content.Load<Texture2D>("noTexture");
+                    x++;
 
-                    var platform = new Tile(texture)
+                    switch (character)
+                    {
+                        case '1':
+                            _texture = _content.Load<Texture2D>("ground05");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '2':
+                            _texture = _content.Load<Texture2D>("ground06");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '3':
+                            _texture = _content.Load<Texture2D>("leafy_ground01");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '4':
+                            _texture = _content.Load<Texture2D>("leafy_ground02");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '5':
+                            _texture = _content.Load<Texture2D>("rocky01");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '6':
+                            _texture = _content.Load<Texture2D>("rocky03");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '?':
+                            _texture = _content.Load<Texture2D>("board01");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '>':
+                            _texture = _content.Load<Texture2D>("board03");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '^':
+                            _texture = _content.Load<Texture2D>("board04");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '%':
+                            _texture = _content.Load<Texture2D>("crystal02");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '*':
+                            _texture = _content.Load<Texture2D>("crystal02");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '$':
+                            _texture = _content.Load<Texture2D>("crystal03");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        case '£':
+                            _texture = _content.Load<Texture2D>("crystal04");
+                            _tileType = TileTypes.Safe;
+                            break;
+                        default:
+                            continue;
+                    }
+
+                    var platform = new Tile(_texture)
                     {
                         Position = new Vector2(x * 128, y * 128),
                         Layer = 0.999f,
+                        TileType = _tileType,
                     };
-
-                    x++;
-
-                    if (character == '1')
-                    {
-                        platform.PlatformType = PlatformTypes.Safe;
-                    }
-                    else
-                    {
-                        continue;
-                    }
 
                     _components.Add(platform);
                 }
@@ -114,7 +169,7 @@ namespace ThibautHumblet_GameDev_Final.Map
                     {
                         var platform = (Tile)spriteA;
 
-                        if (platform.PlatformType == PlatformTypes.Dangerous)
+                        if (platform.TileType == TileTypes.Dangerous)
                         {
                             LoadContent();
                             break;

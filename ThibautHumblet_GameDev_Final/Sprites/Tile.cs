@@ -9,22 +9,23 @@ using ThibautHumblet_GameDev_Final.Interfaces;
 
 namespace ThibautHumblet_GameDev_Final.Sprites
 {
-    public enum PlatformTypes
+    public enum TileTypes
     {
         Dangerous,
         Safe,
+        Empty,
     }
 
     public class Tile : Sprite, IMoveable
     {
         public Vector2 Velocity { get; set; }
 
-        public PlatformTypes PlatformType;
+        public TileTypes TileType;
 
         public Tile(Texture2D texture)
           : base(texture)
         {
-            PlatformType = PlatformTypes.Safe;
+            TileType = TileTypes.Safe;
         }
 
         public override void Update(GameTime gameTime)

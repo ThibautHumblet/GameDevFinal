@@ -108,7 +108,8 @@ namespace ThibautHumblet_GameDev_Final
                 { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10) },
                 { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
                 { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
-                { "Jump", new Animation(Content.Load<Texture2D>("SpritesheetJump"), 12) },
+                { "JumpStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpStart"), 5) },
+                { "JumpEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpEnd"), 4) },
                 { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8) },
       })
         {

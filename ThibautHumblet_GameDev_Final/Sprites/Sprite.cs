@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Animations;
 using ThibautHumblet_GameDev_Final.Components;
+using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final.Sprites
 {

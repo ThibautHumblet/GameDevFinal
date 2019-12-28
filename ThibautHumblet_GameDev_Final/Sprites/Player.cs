@@ -48,11 +48,11 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             }
             if (_input.Keydown(Keys.Left))
             {
-                _position.X -= 3;
+                _position.X -= 6;
             }
             if (_input.Keydown(Keys.Right))
             {
-                _position.X += 3;
+                _position.X += 6;
             }
 
             SetAnimation();
@@ -73,11 +73,11 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         {
             if (Velocity.Y < 0)
             {
-                _animationManager.Play(_animations["Jump"]);
+                _animationManager.Play(_animations["JumpStart"]);
             }
             else if (Velocity.Y > 0)
             {
-                _animationManager.Play(_animations["Jump"]);
+                _animationManager.Play(_animations["JumpEnd"]);
             }
             else if (_input.Keydown(Keys.Right))
             {
@@ -214,12 +214,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                         this.X = platform.Rectangle.Left - this.Rectangle.Width;
                     }
 
-                    if (onRight)
-                    {
-                        this.X = platform.Rectangle.Right + this.Rectangle.Width;
-                    }
-
-
                     if (onTop)
                     {
                         if (!_jumping)
@@ -228,6 +222,16 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                             Velocity.Y = 0;
                             _isOnGround = true;
                         }
+                    }
+
+                    if (onRight)
+                    {
+                        this.X = platform.Rectangle.Right;
+                    }
+
+                    if (onBotton)
+                    {
+                        this.Y = platform.Rectangle.Bottom + this.Rectangle.Height;
                     }
 
 

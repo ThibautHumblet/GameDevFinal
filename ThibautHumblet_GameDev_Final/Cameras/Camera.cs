@@ -21,7 +21,7 @@ namespace ThibautHumblet_GameDev_Final.Cameras
 
             var offset = Matrix.CreateTranslation(
                 Game1.schermB / 2,
-                Game1.schermH / 2,
+                Game1.schermH / 1,
                 0);
 
             Transform = position * offset;
