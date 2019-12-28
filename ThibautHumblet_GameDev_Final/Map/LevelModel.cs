@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ThibautHumblet_GameDev_Final.Sprites;
+
+namespace ThibautHumblet_GameDev_Final.Map
+{
+    public class LevelModel
+    {
+        public readonly Player Player;
+
+        public LevelModel(Player player)
+        {
+            Player = player;
+        }
+    }
+}

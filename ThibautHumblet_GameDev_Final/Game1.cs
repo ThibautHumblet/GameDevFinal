@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
-using ThibautHumblet_GameDev_Final.Player;
+using ThibautHumblet_GameDev_Final.Animations;
+using ThibautHumblet_GameDev_Final.Map;
+using ThibautHumblet_GameDev_Final.Sprites;
 using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final
@@ -32,8 +34,9 @@ namespace ThibautHumblet_GameDev_Final
         // input
         Input input;
 
-        // sprites
-        private List<SpriteManager> _sprites;
+        private State _currentState;
+        private GameModel _gameModel;
+        private LevelModel _level1;
 
         public Game1()
         {
@@ -83,7 +86,32 @@ namespace ThibautHumblet_GameDev_Final
 
             // TODO: use this.Content to load your game content here
 
-            // parallax achtergrond inladen
+            _gameModel = new GameModel()
+            {
+                ContentManger = Content,
+                GraphicsDeviceManager = graphics,
+                SpriteBatch = spriteBatch,
+            };
+            _currentState = new LevelSelectorState(_gameModel);
+            _currentState.LoadContent();
+
+            // player inladen
+            var player = new Player(input, new Dictionary<string, Animation>()
+      {
+                { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10) },
+                { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
+                { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
+                { "Jump", new Animation(Content.Load<Texture2D>("SpritesheetJump"), 12) },
+                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8) },
+      })
+        {
+            Position = new Vector2(300, 100),
+            Layer = 1f,
+        };
+
+            _level1 = new LevelModel(player);
+
+        // parallax achtergrond inladen
             laag01 = Content.Load<Texture2D>("_01_ground");
             laag02 = Content.Load<Texture2D>("_02_trees and bushes");
             laag03 = Content.Load<Texture2D>("_03_distant_trees");
@@ -96,28 +124,6 @@ namespace ThibautHumblet_GameDev_Final
             laag10 = Content.Load<Texture2D>("_10_distant_clouds");
             laag11 = Content.Load<Texture2D>("_11_background");
 
-            // mapBlokjes
-            var texture = Content.Load<Texture2D>("ground05");
-
-            // player inladen
-            _sprites = new List<SpriteManager>()
-            {
-                new Sprite(Content.Load<Texture2D>("idle (1)"))
-                {
-                  Position = new Vector2(300, 100),
-                  CollisionType = CollisionTypes.Full,
-                },
-                new SpriteManager(texture)
-                {
-                  Position = new Vector2(300, 550),
-                  CollisionType = CollisionTypes.Full,
-                },
-                                new SpriteManager(texture)
-                {
-                  Position = new Vector2(700, 550),
-                  CollisionType = CollisionTypes.Full,
-                },
-            };
         }
 
         /// <summary>
@@ -158,34 +164,13 @@ namespace ThibautHumblet_GameDev_Final
             if (WolkenPositie_10.X == laag10.Width)
                 WolkenPositie_10.X = 0;
 
-            foreach (var sprite in _sprites)
-                sprite.Update(gameTime, input);
 
-            CheckCollision(gameTime);
+                    _currentState = new PlayingState(_gameModel, _level1);
+                    _currentState.LoadContent();
 
-            foreach (var sprite in _sprites)
-                sprite.ApplyPhysics(gameTime);
+            _currentState.Update(gameTime);
 
             base.Update(gameTime);
-        }
-
-        public void CheckCollision(GameTime gameTime)
-        {
-            var collidableSprites = _sprites.Where(c => c.CollisionType != CollisionTypes.None);
-
-            foreach (var spriteA in collidableSprites)
-            {
-                foreach (var spriteB in collidableSprites)
-                {
-                    // Don't do anything if they're the same sprite!
-                    if (spriteA == spriteB)
-                        continue;
-
-                    if (spriteA.WillIntersect(spriteB))
-                        //if (spriteA.Rectangle.Intersects(spriteB.Rectangle))
-                        spriteA.OnCollide(spriteB);
-                }
-            }
         }
 
         /// <summary>
@@ -220,10 +205,7 @@ namespace ThibautHumblet_GameDev_Final
             spriteBatch.Draw(MainTarget, desktopRectangle, Color.White);
             spriteBatch.End();
 
-            spriteBatch.Begin();
-            foreach (var sprite in _sprites)
-                sprite.Draw(gameTime, spriteBatch);
-            spriteBatch.End();
+            _currentState.Draw(gameTime);
 
             base.Draw(gameTime);
         }
