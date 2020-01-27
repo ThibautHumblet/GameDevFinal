@@ -53,6 +53,7 @@
     <Compile Include="Map\LevelSelectorState.cs" />
     <Compile Include="Map\PlayingState.cs" />
     <Compile Include="Map\State.cs" />
+    <Compile Include="ParallaxBackground\Parallax.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\Player.cs" />

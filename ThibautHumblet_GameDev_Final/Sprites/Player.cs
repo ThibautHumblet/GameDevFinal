@@ -19,6 +19,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         private bool _jumping = false;
 
         public Vector2 Velocity;
+        public float Parallaxscroll;
         /// <summary>
         /// These are the types of attributes to only change on level-up
         /// </summary>
@@ -49,10 +50,12 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             if (_input.Keydown(Keys.Left))
             {
                 _position.X -= 6;
+                Game1.AchtergrondPositie.X--;
             }
-            if (_input.Keydown(Keys.Right))
+            else if (_input.Keydown(Keys.Right))
             {
                 _position.X += 6;
+                Game1.AchtergrondPositie.X++;
             }
 
             SetAnimation();

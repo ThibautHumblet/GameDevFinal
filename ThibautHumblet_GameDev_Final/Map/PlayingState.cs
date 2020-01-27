@@ -56,6 +56,9 @@ namespace ThibautHumblet_GameDev_Final.Map
 
             _components.Add(_level.Player);
 
+            foreach (var parallax in _level.Parallaxes)
+                _components.Add(parallax);
+
             int y = 1;
             foreach (var line in _map)
             {

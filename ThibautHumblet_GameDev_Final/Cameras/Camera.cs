@@ -20,9 +20,9 @@ namespace ThibautHumblet_GameDev_Final.Cameras
               0);
 
             var offset = Matrix.CreateTranslation(
-                Game1.schermB / 2,
-                Game1.schermH / 1,
-                0);
+                Game1.ScreenWidth / 2,
+                Game1.ScreenHeight / 2,
+                0);;
 
             Transform = position * offset;
         }
