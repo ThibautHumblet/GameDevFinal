@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu>
+  <Axis>Y</Axis>
+  <Effects>FadeEffect</Effects>
+  <Item>
+    <Image>
+      <Text>Start Game</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <Image>
+      <Text>Afsluiten</Text>
+    </Image>
+  </Item>
+</menu>

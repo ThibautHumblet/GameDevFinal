@@ -9,6 +9,7 @@ namespace ThibautHumblet_GameDev_Final.Map
 {
     public class LevelSelectorState : State
     {
+        public bool Play =false;
         public LevelSelectorState(GameModel gameModel)
             : base(gameModel)
         {
@@ -17,7 +18,7 @@ namespace ThibautHumblet_GameDev_Final.Map
 
         public override void LoadContent()
         {
-
+            
         }
 
         public override void Update(GameTime gameTime)

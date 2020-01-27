@@ -221,7 +221,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                             this._position.Y = platform.Rectangle.Top - this.Rectangle.Height;
                             Velocity.Y = 0;
                             _isOnGround = true;
-                        }
+                        } 
                     }
 
                     if (onRight)
@@ -231,7 +231,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
                     if (onBotton)
                     {
-                        this.Y = platform.Rectangle.Bottom + this.Rectangle.Height;
+                        if (!_jumping)
+                        this.Y = platform.Rectangle.Bottom - this.Rectangle.Height;
                     }
 
 
