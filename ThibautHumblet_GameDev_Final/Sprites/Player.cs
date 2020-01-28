@@ -25,6 +25,10 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         public Vector2 Velocity;
         public float Parallaxscroll;
 
+        public bool WorldShift;
+
+        bool isCollidingLeft = false, isCollidingRight = false;
+
         public Player(Input input, Dictionary<string, Animation> animations) : base(animations)
         {
             _input = input;
@@ -59,13 +63,24 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     if (_input.Keydown(Keys.Left))
                     {
                         _position.X -= 6;
-                        Game1.AchtergrondPositie.X--;
+                        if (!isCollidingLeft)
+                            Game1.AchtergrondPositie.X--;
                     }
                     else if (_input.Keydown(Keys.Right))
                     {
                         _position.X += 6;
-                        Game1.AchtergrondPositie.X++;
+                        if (!isCollidingRight)
+                            Game1.AchtergrondPositie.X++;
                     }
+
+                    if (_input.Keypress(Keys.RightControl))
+                    {
+                        if (WorldShift == false)
+                            WorldShift = true;
+                        else
+                            WorldShift = false;
+                    }
+
                 }
                 SetAnimation();
 
@@ -79,7 +94,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         {
             if (!Game1.mainMenu)
             {
-                //Position = new Vector2(Position.X, Position.Y + Velocity.Y);
                 this.Y += Velocity.Y;
                 this.X += Velocity.X;
             }
@@ -176,7 +190,10 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     if (onLeft)
                     {
                         this.X = platform.Rectangle.Left - this.Rectangle.Width;
+                        isCollidingRight = true;
                     }
+                    else
+                        isCollidingRight = false;
 
                     if (onTop)
                     {
@@ -191,7 +208,10 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     if (onRight)
                     {
                         this.X = platform.Rectangle.Right;
+                        isCollidingLeft = true;
                     }
+                    else
+                        isCollidingLeft = false;
 
                     if (onBotton)
                     {

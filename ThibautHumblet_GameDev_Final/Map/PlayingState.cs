@@ -33,10 +33,12 @@ namespace ThibautHumblet_GameDev_Final.Map
         {
             get
             {
-                switch (Game1.Level)
+                if (_level.Player.WorldShift)
                 {
-                    case 0:
-                        return new List<string>()
+                    switch (Game1.Level)
+                    {
+                        case 0:
+                            return new List<string>()
                 {
                     "00000000000000000000000110000000000000",
                     "04000010000000000000011000000000000000",
@@ -45,21 +47,21 @@ namespace ThibautHumblet_GameDev_Final.Map
                     "11112221121112211112211111112211111211",
                     "66622211655521551152566215662215111211"
                 };
-                    case 1:
-                        return new List<string>()
+                        case 1:
+                            return new List<string>()
                 {
                             "00000000000000000",
                             "00000000000000000",
                             "4444004001401001$"
                 };
-                    case 2:
-                        return new List<string>()
+                        case 2:
+                            return new List<string>()
                 {
                             "0000000$000000000",
                             "111111111144111111"
                 };
-                    default:
-                        return new List<string>()
+                        default:
+                            return new List<string>()
                         {
                             "10000",
                             "0001100000",
@@ -67,8 +69,47 @@ namespace ThibautHumblet_GameDev_Final.Map
                             "11111100111",
                             "444114!!144"
                         };
+                    }
                 }
+                else
+                {
+                    switch (Game1.Level)
+                    {
+                        case 0:
+                            return new List<string>()
+                {
+                    "00000000000000000000000110000000000000",
+                    "04000010000000000000011000000000000000",
+                    "0$0010000$02000000011000000000000$0000",
+                    "11000000000111111110000000000111111111",
+                    "11100001121112211112211111112211111211",
+                    "66622211655521551152566215662215111211"
+                };
+                        case 1:
+                            return new List<string>()
+                {
+                            "00000000000000000",
+                            "00000000000000000",
+                            "4444004001401001$"
+                };
+                        case 2:
+                            return new List<string>()
+                {
+                            "0000000$000000000",
+                            "111111111144111111"
+                };
+                        default:
+                            return new List<string>()
+                        {
+                            "10000",
+                            "0001100000",
+                            "0010000000",
+                            "11111100111",
+                            "444114!!144"
+                        };
+                    }
 
+                }
             }
         }
 
@@ -211,6 +252,11 @@ namespace ThibautHumblet_GameDev_Final.Map
             }
 
             _level.Player.ApplyVelocity(gameTime);
+
+            if (_level.Player.WorldShift)
+            {
+                LoadContent();
+            }
         }
 
         public void NextLevel()
