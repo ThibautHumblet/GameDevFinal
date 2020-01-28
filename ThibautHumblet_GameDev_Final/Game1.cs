@@ -36,15 +36,16 @@ namespace ThibautHumblet_GameDev_Final
         // input
         Input input;
 
-        private State _currentState;
+        private State _state;
         private GameModel _gameModel;
         private LevelModel _level;
 
-        public static int Level = 20;
+        public static int Level = 10;
 
         static public bool mainMenu = true;
 
-        private Player player;
+        public static Player Player;
+        public static Vector2 StartingPosition = new Vector2(300, 0);
 
         private Camera _camera;
 
@@ -97,11 +98,9 @@ namespace ThibautHumblet_GameDev_Final
                 GraphicsDeviceManager = graphics,
                 SpriteBatch = spriteBatch,
             };
-            _currentState = new LevelSelectorState(_gameModel);
-            _currentState.LoadContent();
 
             // player inladen
-            player = new Player(input, new Dictionary<string, Animation>()
+            Player = new Player(input, new Dictionary<string, Animation>()
       {
                 { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10, 0.1f, true) },
                 { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
@@ -111,11 +110,11 @@ namespace ThibautHumblet_GameDev_Final
                 { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8, 0.4f, false) }
       })
         {
-            Position = new Vector2(300, 100),
+            Position = StartingPosition,
             Layer = 1f,
         };
 
-            _level = new LevelModel(player);
+            _level = new LevelModel(Player);
 
         // parallax achtergrond inladen
             laag01 = Content.Load<Texture2D>("_01_ground");
@@ -155,12 +154,12 @@ namespace ThibautHumblet_GameDev_Final
 
             // TODO: Add your update logic here
 
-            _camera.Follow(player);
+            _camera.Follow(Player);
 
-            _currentState = new PlayingState(_gameModel, _level);
-                    _currentState.LoadContent();
+            _state = new PlayingState(_gameModel, _level);
+                    _state.LoadContent();
 
-            _currentState.Update(gameTime);
+            _state.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -197,7 +196,7 @@ namespace ThibautHumblet_GameDev_Final
                 #endregion
 
                 spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Transform);
-                _currentState.Draw(gameTime);
+                _state.Draw(gameTime);
                 spriteBatch.End();
             }
 

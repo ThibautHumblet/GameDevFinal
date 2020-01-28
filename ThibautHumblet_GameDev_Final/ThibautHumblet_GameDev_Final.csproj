@@ -51,7 +51,6 @@
     <Compile Include="Interfaces\IMovable.cs" />
     <Compile Include="Map\GameModel.cs" />
     <Compile Include="Map\LevelModel.cs" />
-    <Compile Include="Map\LevelSelectorState.cs" />
     <Compile Include="Map\PlayingState.cs" />
     <Compile Include="Map\State.cs" />
     <Compile Include="ParallaxBackground\Parallax.cs" />

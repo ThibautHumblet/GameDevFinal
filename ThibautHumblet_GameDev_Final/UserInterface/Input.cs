@@ -15,10 +15,7 @@ namespace ThibautHumblet_GameDev_Final.UserInterface
         public bool shift_press, control_press, alt_press;
         public bool old_shift_down, old_control_down, old_alt_down;
 
-        public Input()
-        {
-
-        }
+        public Input() { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] //marcro gebruikt om de code iets compacter te maken
         public bool Keypress(Keys k)

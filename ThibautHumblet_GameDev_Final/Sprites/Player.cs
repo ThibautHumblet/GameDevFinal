@@ -45,31 +45,32 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             {
                 if (Velocity.Y >= 0)
                     _jumping = false;
-
-                if (_isOnGround)
+                if (!Dead)
                 {
-                    if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                    if (_isOnGround)
                     {
-                        Velocity.Y = -12f;
-                        _jumping = true;
-                        Sound.jump.Play();
+                        if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                        {
+                            Velocity.Y = -12f;
+                            _jumping = true;
+                            Sound.jump.Play();
+                        }
+                    }
+                    else
+                    {
+                        Velocity.Y += 0.50f;
+                    }
+                    if (_input.Keydown(Keys.Left))
+                    {
+                        _position.X -= 6;
+                        Game1.AchtergrondPositie.X--;
+                    }
+                    else if (_input.Keydown(Keys.Right))
+                    {
+                        _position.X += 6;
+                        Game1.AchtergrondPositie.X++;
                     }
                 }
-                else
-                {
-                    Velocity.Y += 0.50f;
-                }
-                if (_input.Keydown(Keys.Left))
-                {
-                    _position.X -= 6;
-                    Game1.AchtergrondPositie.X--;
-                }
-                else if (_input.Keydown(Keys.Right))
-                {
-                    _position.X += 6;
-                    Game1.AchtergrondPositie.X++;
-                }
-
                 SetAnimation();
 
                 _animationManager.Update(gameTime);
@@ -90,28 +91,29 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         private void SetAnimation()
         {
-            if (Velocity.Y < 0)
+            if (!Dead)
             {
-                _animationManager.Play(_animations["JumpStart"]);
-            }
-            else if (Velocity.Y > 0)
-            {
-                _animationManager.Play(_animations["JumpEnd"]);
-            }
-            else if (_input.Keydown(Keys.Right))
-            {
-                _animationManager.Play(_animations["Walk"]);
-            }
-            else if (_input.Keydown(Keys.Left))
-            {
-                _animationManager.Play(_animations["Walk"]);
-            }
-            else if (!Dead)
-            {
-                _animationManager.Play(_animations["Idle"]);
-            }
-            
-            if (Dead)
+                if (Velocity.Y < 0)
+                {
+                    _animationManager.Play(_animations["JumpStart"]);
+                }
+                else if (Velocity.Y > 0)
+                {
+                    _animationManager.Play(_animations["JumpEnd"]);
+                }
+                else if (_input.Keydown(Keys.Right))
+                {
+                    _animationManager.Play(_animations["Walk"]);
+                }
+                else if (_input.Keydown(Keys.Left))
+                {
+                    _animationManager.Play(_animations["Walk"]);
+                }
+                else
+                {
+                    _animationManager.Play(_animations["Idle"]);
+                }
+            } else
             {
                 _animationManager.Play(_animations["Dead"]);
                 if (AnimationManager.DonePlaying)
