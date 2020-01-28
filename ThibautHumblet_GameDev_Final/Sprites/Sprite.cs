@@ -97,40 +97,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             }
         }
 
-        #region
-
-        public Vector2 TopLeft
-        {
-            get
-            {
-                return new Vector2(Rectangle.X, Rectangle.Y);
-            }
-        }
-
-        public Vector2 TopRight
-        {
-            get
-            {
-                return new Vector2(Rectangle.X + Rectangle.Width, Rectangle.Y);
-            }
-        }
-
-        public Vector2 BottomLeft
-        {
-            get
-            {
-                return new Vector2(Rectangle.X, Rectangle.Y + Rectangle.Height);
-            }
-        }
-
-        public Vector2 BottomRight
-        {
-            get
-            {
-                return new Vector2(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Height);
-            }
-        }
-
         public Vector2 Centre
         {
             get
@@ -138,41 +104,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                 return new Vector2(Rectangle.X + (Rectangle.Width / 2), Rectangle.Y + (Rectangle.Height / 2));
             }
         }
-
-        public List<Vector2> Dots
-        {
-            get
-            {
-                return new List<Vector2>()
-        {
-          Centre,
-          TopRight,
-          BottomRight,
-          BottomLeft,
-          TopLeft,
-        };
-            }
-        }
-
-        public List<Vector2> GetNormals()
-        {
-            var normals = new List<Vector2>();
-
-            var dots = this.Dots;
-
-            for (int i = 1; i < dots.Count - 1; i++)
-            {
-                normals.Add(Vector2.Normalize(new Vector2(dots[i + 1].X - dots[i].X, dots[i + 1].Y - dots[i].Y)));
-            }
-
-            normals.Add(Vector2.Normalize(new Vector2(dots[1].X - dots[dots.Count - 1].X, dots[1].Y - dots[dots.Count - 1].Y)));
-
-            return normals;
-        }
-
-        #endregion
-
-        public bool IsRemoved { get; set; }
 
         public Sprite(Texture2D texture)
         {
@@ -201,7 +132,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-
+            //debug gametime 
+            Console.WriteLine(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -218,7 +150,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public virtual void OnCollide(Sprite sprite)
         {
-
+            //debug collision
+            Console.WriteLine(sprite);
         }
 
         public bool IsTouching(Sprite sprite)
@@ -227,27 +160,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                 this.Rectangle.Left <= sprite.Rectangle.Right &&
                 this.Rectangle.Bottom >= sprite.Rectangle.Top &&
                 this.Rectangle.Top <= sprite.Rectangle.Bottom - sprite.Rectangle.Height;
-        }
-
-        public bool IsTouchingTopOf(Sprite sprite)
-        {
-            return this.Rectangle.Right >= sprite.Rectangle.Left &&
-                this.Rectangle.Left <= sprite.Rectangle.Right &&
-                this.Rectangle.Bottom >= sprite.Rectangle.Top &&
-                this.Rectangle.Top < sprite.Rectangle.Top;
-        }
-
-        public bool IsTouchingLeftOf(Sprite sprite)
-        {
-            return this.Rectangle.Bottom >= sprite.Rectangle.Top &&
-              this.Rectangle.Top <= sprite.Rectangle.Bottom &&
-              this.Rectangle.Right >= sprite.Rectangle.Left &&
-              this.Rectangle.Left < sprite.Rectangle.Left;
-        }
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }

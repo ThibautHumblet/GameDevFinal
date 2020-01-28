@@ -7,14 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Components;
-using ThibautHumblet_GameDev_Final.Crystals;
 using ThibautHumblet_GameDev_Final.Interfaces;
 using ThibautHumblet_GameDev_Final.Sprites;
 
-namespace ThibautHumblet_GameDev_Final.Map
+namespace ThibautHumblet_GameDev_Final.Maps
 {
-    enum CrystalType { Crystal1, Crystal2, Crystal3, Crystal4, Empty};
-    public class PlayingState: State
+    public class PlayingState : State
     {
         private LevelModel _level;
 
@@ -28,40 +26,38 @@ namespace ThibautHumblet_GameDev_Final.Map
 
         private Texture2D _texture;
 
-        private CrystalType _crystalType;
-
-        private Crystal _crystal = new Crystal();
-
         private List<string> _map
         {
             get
             {
-                switch (Game1.Level)
+                if (!_level.Player.WorldShift)
                 {
-                    case 0:
-                        Crystal.ResetCrystals();
-                        return new List<string>()
+                    switch (Game1.Level)
+                    {
+                        case 0:
+                            return new List<string>()
                 {
-                    "00000000000000000000000110000000000000",
-                    "04000010000000000000011000000000000000",
-                    "000010000*0200000001100000000000000000",
-                    "11111111111111111110000000000111111111",
-                    "11112221121112211112211111112211111211",
-                    "66622211655521551152566215662215111211"
+                                "0000000000000130000000000000000000000000000000000000005565500000000",
+                                "00000000>000021333300000000000003440000033000100030000065600000$000",
+                                "0000000012430155651300000000340000000000561000000003000560000211000",
+                                "!!!!!!!!6655!5555666!!!!!!6656!!!!!!!!!!565!!!!!!!!5556655566556!!!",
+                                "4431212165566666656555665666665556655566556555656555555566565656566",
                 };
-                    case 1:
-                        return new List<string>()
+                        case 1:
+                            return new List<string>()
                 {
-                            "4444004001401001"
+                            "00000000000000000",
+                            "00000000000000000",
+                            "4444004001401001$"
                 };
-                    case 2:
-                        return new List<string>()
+                        case 2:
+                            return new List<string>()
                 {
-                            "000*0£0$00%0",
-                            "111111111144"
+                            "0000000$000000000",
+                            "111111111144111111"
                 };
-                    default:
-                        return new List<string>()
+                        default:
+                            return new List<string>()
                         {
                             "10000",
                             "0001100000",
@@ -69,8 +65,48 @@ namespace ThibautHumblet_GameDev_Final.Map
                             "11111100111",
                             "444114!!144"
                         };
+                    }
                 }
+                else
+                {
+                    switch (Game1.Level)
+                    {
+                        case 0:
+                            return new List<string>()
+                {
+                                "0000000000000000000000000000000000000340000000000000005565500000000000000",
+                                "00000000>000000343300000000000000040000030000003000000000000000$000000000",
+                                "0000000012430031251300430000340000000000530000000003000000000211000000000",
+                                "!!!!!!!!6655!!655666!!66666656!!!!!!!!!!56!!!!!!!!!5556655566556!!!!!!!!!",
+                                "4431212165566666656555665666665556655566556555656555555566565656566431212",
+                };
+                        case 1:
+                            return new List<string>()
+                {
+                                "0000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "0000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "0000000000000000000000000000000000000000000000000000000000042113000000000",
+                                "!!!!!!!!11111111111111111111111111111111111111111111111111111111!!!!!!!!!",
+                                "4431212165566666656555665666665556655566556555656555555566565656566431212",
+                };
+                        case 2:
+                            return new List<string>()
+                {
+                            "0000000$000000000",
+                            "111111111144111111"
+                };
+                        default:
+                            return new List<string>()
+                        {
+                            "10000",
+                            "0001100000",
+                            "0010000000",
+                            "11111100111",
+                            "444114!!144"
+                        };
+                    }
 
+                }
             }
         }
 
@@ -140,44 +176,9 @@ namespace ThibautHumblet_GameDev_Final.Map
                             _texture = _content.Load<Texture2D>("spikes");
                             _tileType = TileTypes.Spike;
                             break;
-                        case '%':
-                            if (!Crystal.gotCrystal1)
-                            {
-                                _texture = _content.Load<Texture2D>("crystal01");
-                                _crystalType = CrystalType.Crystal1;
-                                _tileType = TileTypes.Crystal;
-                            }
-                            else
-                                continue;
-                            break;
-                        case '*':
-                            if (!Crystal.gotCrystal2)
-                            {
-                                _texture = _content.Load<Texture2D>("crystal02");
-                                _crystalType = CrystalType.Crystal2;
-                                _tileType = TileTypes.Crystal;
-                            } else
-                                continue;
-                            break;
                         case '$':
-                            if (!Crystal.gotCrystal3)
-                            {
-                                _texture = _content.Load<Texture2D>("crystal03");
-                                _crystalType = CrystalType.Crystal3;
+                                _texture = _content.Load<Texture2D>("crystal01"); ;
                                 _tileType = TileTypes.Crystal;
-                            }
-                            else
-                                continue;
-                            break;
-                        case '£':
-                            if (!Crystal.gotCrystal4)
-                            {
-                                _texture = _content.Load<Texture2D>("crystal04");
-                                _crystalType = CrystalType.Crystal4;
-                                _tileType = TileTypes.Crystal;
-                            }
-                            else
-                                continue;
                             break;
                         default:
                             continue;
@@ -232,28 +233,7 @@ namespace ThibautHumblet_GameDev_Final.Map
 
                         if (platform.TileType == TileTypes.Crystal)
                         {
-                            switch (_crystalType)
-                            {
-                                case CrystalType.Crystal1:
-                                    Crystal.gotCrystal1 = true;
-                                    _crystalType = CrystalType.Empty;
-                                    break;
-                                case CrystalType.Crystal2:
-                                    Crystal.gotCrystal2 = true;
-                                    _crystalType = CrystalType.Empty;
-                                    break;
-                                case CrystalType.Crystal3:
-                                    Crystal.gotCrystal3 = true;
-                                    _crystalType = CrystalType.Empty;
-                                    break;
-                                case CrystalType.Crystal4:
-                                    Crystal.gotCrystal4 = true;
-                                    _crystalType = CrystalType.Empty;
-                                    break;
-                                default:
-                                    break;
-                            }
-                            LoadContent();
+                            NextLevel();
                         }
 
                     }
@@ -264,6 +244,19 @@ namespace ThibautHumblet_GameDev_Final.Map
             }
 
             _level.Player.ApplyVelocity(gameTime);
+
+            if (_level.Player.WorldShift)
+            {
+                LoadContent();
+            }
+        }
+
+        public void NextLevel()
+        {
+            Game1.Level++;
+            Game1.Player.Position = new Vector2(0, 0);
+            Game1.AchtergrondPositie.X = 0;
+            LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
