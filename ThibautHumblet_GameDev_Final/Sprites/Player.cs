@@ -24,10 +24,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public Vector2 Velocity;
         public float Parallaxscroll;
-        /// <summary>
-        /// These are the types of attributes to only change on level-up
-        /// </summary>
-        
 
         public Player(Input input, Dictionary<string, Animation> animations) : base(animations)
         {
@@ -123,56 +119,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void OnCollide(Sprite sprite)
         {
-            {
-                var resultP1 = GetMinMax(this.Dots, GetNormals()[1]);
-                var resultP2 = GetMinMax(sprite.Dots, GetNormals()[1]);
-
-                var resultQ1 = GetMinMax(this.Dots, GetNormals()[0]);
-                var resultQ2 = GetMinMax(sprite.Dots, GetNormals()[0]);
-
-                var resultR1 = GetMinMax(this.Dots, sprite.GetNormals()[1]);
-                var resultR2 = GetMinMax(sprite.Dots, sprite.GetNormals()[1]);
-
-                var resultS1 = GetMinMax(this.Dots, sprite.GetNormals()[0]);
-                var resultS2 = GetMinMax(sprite.Dots, sprite.GetNormals()[0]);
-
-                float p1Min = resultP1[0];
-                float p1Max = resultP1[1];
-                float p2Min = resultP2[0];
-                float p2Max = resultP2[1];
-
-                float q1Min = resultQ1[0];
-                float q1Max = resultQ1[1];
-                float q2Min = resultQ2[0];
-                float q2Max = resultQ2[1];
-
-                float r1Min = resultR1[0];
-                float r1Max = resultR1[1];
-                float r2Min = resultR2[0];
-                float r2Max = resultR2[1];
-
-                float s1Min = resultS1[0];
-                float s1Max = resultS1[1];
-                float s2Min = resultS2[0];
-                float s2Max = resultS2[1];
-
-                var separate_P = p1Max < p2Min || p2Max < p1Min;
-                var separate_Q = q1Max < q2Min || q2Max < q1Min;
-                var separate_R = r1Max < r2Min || r2Max < r1Min;
-                var separate_S = s1Max < s2Min || s2Max < s1Min;
-
-                var isSeperated = separate_P || separate_Q || separate_R || separate_S;
-
-                if (isSeperated)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-
             var test = sprite.Centre - (this.Centre);// + new Vector2(10, 25));
 
             var rotation = (float)Math.Atan2(test.Y, test.X);
@@ -257,44 +203,12 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     {
                         Dead = true;
                     }
-
-
                     break;
 
                 default:
                     throw new Exception("Unexpected sprite: " + sprite.ToString());
             }
         }
-
-        private List<float> GetMinMax(List<Vector2> dots, Vector2 axis)
-        {
-            var minProj = Vector2.Dot(dots[1], axis);
-            var maxProj = Vector2.Dot(dots[1], axis);
-            var minDot = 1;
-            var maxDot = 1;
-
-            for (int i = 2; i < dots.Count; i++)
-            {
-                var currProj = Vector2.Dot(dots[i], axis);
-
-                if (minProj > currProj)
-                {
-                    minProj = currProj;
-                    minDot = i;
-                }
-
-                if (currProj > maxProj)
-                {
-                    maxProj = currProj;
-                    maxDot = i;
-                }
-            }
-
-            return new List<float>()
-      {
-        minProj,
-        maxProj,
-      };
-        }
     }
+
 }
