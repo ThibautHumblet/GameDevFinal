@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Animations;
 using ThibautHumblet_GameDev_Final.Components;
+using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final.Sprites
 {
@@ -78,8 +79,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         {
             get
             {
-                int x = 0;
-                int y = 0;
                 int width = 0;
                 int height = 0;
 
@@ -90,7 +89,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                 }
                 else if (_animationManager != null)
                 {
-                    width = _animationManager.FrameWidth;
+                    width = _animationManager.FrameWidth-10;
                     height = _animationManager.FrameHeight;
                 }
 
@@ -225,7 +224,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             return this.Rectangle.Right >= sprite.Rectangle.Left &&
                 this.Rectangle.Left <= sprite.Rectangle.Right &&
                 this.Rectangle.Bottom >= sprite.Rectangle.Top &&
-                this.Rectangle.Top <= sprite.Rectangle.Bottom;
+                this.Rectangle.Top <= sprite.Rectangle.Bottom - sprite.Rectangle.Height;
         }
 
         public bool IsTouchingTopOf(Sprite sprite)

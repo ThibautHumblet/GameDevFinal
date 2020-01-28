@@ -19,6 +19,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         private bool _jumping = false;
 
         public Vector2 Velocity;
+        public float Parallaxscroll;
         /// <summary>
         /// These are the types of attributes to only change on level-up
         /// </summary>
@@ -31,53 +32,66 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (Velocity.Y >= 0)
-                _jumping = false;
+            if (Game1.mainMenu && _input.Keypress(Keys.Enter))
+                Game1.mainMenu = false;
+            if (!Game1.mainMenu && _input.Keypress(Keys.Escape))
+                Game1.mainMenu = true;
 
-            if (_isOnGround)
+            if (!Game1.mainMenu)
             {
-                if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                if (Velocity.Y >= 0)
+                    _jumping = false;
+
+                if (_isOnGround)
                 {
-                    Velocity.Y = -12f;
-                    _jumping = true;
+                    if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                    {
+                        Velocity.Y = -12f;
+                        _jumping = true;
+                    }
                 }
-            }
-            else
-            {
-                Velocity.Y += 0.50f;
-            }
-            if (_input.Keydown(Keys.Left))
-            {
-                _position.X -= 3;
-            }
-            if (_input.Keydown(Keys.Right))
-            {
-                _position.X += 3;
-            }
+                else
+                {
+                    Velocity.Y += 0.50f;
+                }
+                if (_input.Keydown(Keys.Left))
+                {
+                    _position.X -= 6;
+                    Game1.AchtergrondPositie.X--;
+                }
+                else if (_input.Keydown(Keys.Right))
+                {
+                    _position.X += 6;
+                    Game1.AchtergrondPositie.X++;
+                }
 
-            SetAnimation();
+                SetAnimation();
 
-            _animationManager.Update(gameTime);
+                _animationManager.Update(gameTime);
 
-            _isOnGround = false;
+                _isOnGround = false;
+            }
         }
 
         public void ApplyVelocity(GameTime gameTime)
         {
-            //Position = new Vector2(Position.X, Position.Y + Velocity.Y);
-            this.Y += Velocity.Y;
-            this.X += Velocity.X;
+            if (!Game1.mainMenu)
+            {
+                //Position = new Vector2(Position.X, Position.Y + Velocity.Y);
+                this.Y += Velocity.Y;
+                this.X += Velocity.X;
+            }
         }
 
         private void SetAnimation()
         {
             if (Velocity.Y < 0)
             {
-                _animationManager.Play(_animations["Jump"]);
+                _animationManager.Play(_animations["JumpStart"]);
             }
             else if (Velocity.Y > 0)
             {
-                _animationManager.Play(_animations["Jump"]);
+                _animationManager.Play(_animations["JumpEnd"]);
             }
             else if (_input.Keydown(Keys.Right))
             {
@@ -151,16 +165,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
             var rotation2 = Math.Abs(MathHelper.ToDegrees(rotation));
 
-            if (rotation2 > 89 || rotation2 < 91)
-            {
-
-            }
-
-            if (sprite.Y == 640)
-            {
-
-            }
-
             bool onLeft = false;
             bool onRight = false;
             bool onTop = false;
@@ -214,12 +218,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                         this.X = platform.Rectangle.Left - this.Rectangle.Width;
                     }
 
-                    if (onRight)
-                    {
-                        this.X = platform.Rectangle.Right + this.Rectangle.Width;
-                    }
-
-
                     if (onTop)
                     {
                         if (!_jumping)
@@ -228,6 +226,17 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                             Velocity.Y = 0;
                             _isOnGround = true;
                         }
+                    }
+
+                    if (onRight)
+                    {
+                        this.X = platform.Rectangle.Right;
+                    }
+
+                    if (onBotton)
+                    {
+                        _isOnGround = false;
+                        this.Y = platform.Rectangle.Bottom + this.Rectangle.Height;
                     }
 
 

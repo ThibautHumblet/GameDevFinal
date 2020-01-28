@@ -24,5 +24,13 @@ namespace ThibautHumblet_GameDev_Final.Animations
             IsLooping = true;
             FrameSpeed = 0.2f;
         }
+
+        public Animation(Texture2D texture, int frameCount, float frameSpeed)
+        {
+            Texture = texture;
+            FrameCount = frameCount;
+            IsLooping = true;
+            FrameSpeed = frameSpeed;
+        }
     }
 }
