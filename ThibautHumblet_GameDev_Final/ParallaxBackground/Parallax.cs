@@ -12,35 +12,9 @@ namespace ThibautHumblet_GameDev_Final.ParallaxBackground
 {
     public class Parallax : Component
     {
-        private bool _constantSpeed;
-
-        private float _layer;
-
-        private float _scrollingSpeed;
-
         private List<Sprite> _sprites;
 
         private readonly Player _player;
-
-        private float _speed;
-
-        public float Layer
-        {
-            get { return _layer; }
-            set
-            {
-                _layer = value;
-
-                foreach (var sprite in _sprites)
-                    sprite.Layer = _layer;
-            }
-        }
-
-        public Parallax(Texture2D texture, Player player, float scrollingSpeed, bool constantSpeed = false)
-          : this(new List<Texture2D>() { texture, texture }, player, scrollingSpeed, constantSpeed)
-        {
-
-        }
 
         public Parallax(List<Texture2D> textures, Player player, float scrollingSpeed, bool constantSpeed = false)
         {
@@ -57,30 +31,11 @@ namespace ThibautHumblet_GameDev_Final.ParallaxBackground
                     Position = new Vector2(i * texture.Width - Math.Min(i, i + 1), Game1.ScreenHeight - texture.Height),
                 });
             }
-
-            _scrollingSpeed = scrollingSpeed;
-
-            _constantSpeed = constantSpeed;
         }
 
         public override void Update(GameTime gameTime)
         {
-            ApplySpeed(gameTime);
-
             CheckPosition();
-        }
-
-        private void ApplySpeed(GameTime gameTime)
-        {
-            _speed = (float)(_scrollingSpeed * gameTime.ElapsedGameTime.TotalSeconds);
-
-            if (!_constantSpeed || _player.Velocity.X > 0)
-                _speed *= _player.Velocity.X;
-
-            foreach (var sprite in _sprites)
-            {
-               // sprite.Position.X -= _speed;
-            }
         }
 
         private void CheckPosition()
@@ -95,8 +50,6 @@ namespace ThibautHumblet_GameDev_Final.ParallaxBackground
 
                     if (index < 0)
                         index = _sprites.Count - 1;
-
-                    //sprite.Position.X = _sprites[index].Rectangle.Right - (_speed * 2);
                 }
             }
         }

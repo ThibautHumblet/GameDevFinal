@@ -193,6 +193,13 @@
 /processorParam:TextureFormat=Color
 /build:crystal01.png
 
+#begin Fonts/ControlsFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/ControlsFont.spritefont
+
 #begin Fonts/Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

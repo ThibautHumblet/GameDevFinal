@@ -14,7 +14,7 @@ namespace ThibautHumblet_GameDev_Final.Maps
 {
     public class PlayingState : State
     {
-        private LevelModel _level;
+        public static LevelModel _level;
 
         private ObservableCollection<Component> _components;
 
@@ -26,94 +26,13 @@ namespace ThibautHumblet_GameDev_Final.Maps
 
         private Texture2D _texture;
 
-        private List<string> _map
-        {
-            get
-            {
-                if (!_level.Player.WorldShift)
-                {
-                    switch (Game1.Level)
-                    {
-                        case 0:
-                            return new List<string>()
-                {
-                                "0000000000000130000000000000000000000000000000000000005565500000000",
-                                "00000000>000021333300000000000003440000033000100030000065600000$000",
-                                "0000000012430155651300000000340000000000561000000003000560000211000",
-                                "!!!!!!!!6655!5555666!!!!!!6656!!!!!!!!!!565!!!!!!!!5556655566556!!!",
-                                "4431212165566666656555665666665556655566556555656555555566565656566",
-                };
-                        case 1:
-                            return new List<string>()
-                {
-                            "00000000000000000",
-                            "00000000000000000",
-                            "4444004001401001$"
-                };
-                        case 2:
-                            return new List<string>()
-                {
-                            "0000000$000000000",
-                            "111111111144111111"
-                };
-                        default:
-                            return new List<string>()
-                        {
-                            "10000",
-                            "0001100000",
-                            "0010000000",
-                            "11111100111",
-                            "444114!!144"
-                        };
-                    }
-                }
-                else
-                {
-                    switch (Game1.Level)
-                    {
-                        case 0:
-                            return new List<string>()
-                {
-                                "0000000000000000000000000000000000000340000000000000005565500000000000000",
-                                "00000000>000000343300000000000000040000030000003000000000000000$000000000",
-                                "0000000012430031251300430000340000000000530000000003000000000211000000000",
-                                "!!!!!!!!6655!!655666!!66666656!!!!!!!!!!56!!!!!!!!!5556655566556!!!!!!!!!",
-                                "4431212165566666656555665666665556655566556555656555555566565656566431212",
-                };
-                        case 1:
-                            return new List<string>()
-                {
-                                "0000000000000000000000000000000000000000000000000000000000000000000000000",
-                                "0000000000000000000000000000000000000000000000000000000000000000000000000",
-                                "0000000000000000000000000000000000000000000000000000000000042113000000000",
-                                "!!!!!!!!11111111111111111111111111111111111111111111111111111111!!!!!!!!!",
-                                "4431212165566666656555665666665556655566556555656555555566565656566431212",
-                };
-                        case 2:
-                            return new List<string>()
-                {
-                            "0000000$000000000",
-                            "111111111144111111"
-                };
-                        default:
-                            return new List<string>()
-                        {
-                            "10000",
-                            "0001100000",
-                            "0010000000",
-                            "11111100111",
-                            "444114!!144"
-                        };
-                    }
-
-                }
-            }
-        }
+        private Map _map;
 
         public PlayingState(GameModel gameModel, LevelModel level)
           : base(gameModel)
         {
             _level = level;
+            _map = new Map();
         }
 
         public override void LoadContent()
@@ -127,7 +46,7 @@ namespace ThibautHumblet_GameDev_Final.Maps
                 _components.Add(parallax);
 
             int y = 1;
-            foreach (var line in _map)
+            foreach (var line in _map.Load())
             {
                 int x = 1;
                 foreach (var character in line)
@@ -205,6 +124,9 @@ namespace ThibautHumblet_GameDev_Final.Maps
 
         public override void Update(GameTime gameTime)
         {
+            if (Game1.Level > _map.Load().Count)
+                Game1.gewonnen = true;
+
             foreach (var component in _components)
                 component.Update(gameTime);
 
