@@ -63,9 +63,10 @@ namespace ThibautHumblet_GameDev_Final.Map
                     default:
                         return new List<string>()
                         {
+                            "1000",
+                            "0011",
                             "0000",
-                            "0000",
-                            "1111"
+                            "11111111111"
                         };
                 }
 

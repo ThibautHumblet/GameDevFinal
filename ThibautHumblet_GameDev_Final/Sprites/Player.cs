@@ -235,6 +235,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
                     if (onBotton)
                     {
+                        _isOnGround = false;
                         this.Y = platform.Rectangle.Bottom + this.Rectangle.Height;
                     }
 

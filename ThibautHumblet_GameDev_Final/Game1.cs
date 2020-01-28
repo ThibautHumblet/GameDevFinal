@@ -38,7 +38,7 @@ namespace ThibautHumblet_GameDev_Final
         private GameModel _gameModel;
         private LevelModel _level;
 
-        public static int Level = 2;
+        public static int Level = 20;
 
         static public bool mainMenu = true;
 
