@@ -79,8 +79,8 @@ namespace ThibautHumblet_GameDev_Final.Maps
                             _texture = _content.Load<Texture2D>("rocky03");
                             _tileType = TileTypes.Safe;
                             break;
-                        case '?':
-                            _texture = _content.Load<Texture2D>("board01");
+                        case '<':
+                            _texture = _content.Load<Texture2D>("board05");
                             _tileType = TileTypes.Safe;
                             break;
                         case '>':
@@ -180,7 +180,6 @@ namespace ThibautHumblet_GameDev_Final.Maps
         {
             Game1.Level++;
             Game1.Player.Position = new Vector2(0, 0);
-            Game1.AchtergrondPositie.X = 0;
             LoadContent();
         }
 
