@@ -132,7 +132,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-
+            //debug gametime 
+            Console.WriteLine(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -149,7 +150,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public virtual void OnCollide(Sprite sprite)
         {
-
+            //debug collision
+            Console.WriteLine(sprite);
         }
 
         public bool IsTouching(Sprite sprite)
