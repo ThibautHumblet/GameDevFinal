@@ -60,6 +60,7 @@
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\Tile.cs" />
     <Compile Include="UserInterface\Input.cs" />
+    <Compile Include="UserInterface\Menu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

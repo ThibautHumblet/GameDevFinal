@@ -13,8 +13,6 @@ using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final
 {
-
-    public enum Level { level1, level2}
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -22,16 +20,13 @@ namespace ThibautHumblet_GameDev_Final
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private SpriteFont font;
-        private SpriteFont gameOverFont;
 
         // display
         public static int ScreenWidth = 1280;
         public static int ScreenHeight = 720;
-        static public int schermB, schermH;
 
         // achtergrond parralax scrolling
-        Texture2D laag01, laag02, laag03, laag04, laag05, laag06, laag11, titleScreen;
+        Texture2D laag01, laag02, laag03, laag04, laag05, laag06, laag11;
         static public Vector2 AchtergrondPositie;
 
         // input
@@ -49,6 +44,8 @@ namespace ThibautHumblet_GameDev_Final
         public static Vector2 StartingPosition = new Vector2(1500,0);
 
         private Camera _camera;
+
+        private Menu menu;
 
         public Game1()
         {
@@ -75,6 +72,7 @@ namespace ThibautHumblet_GameDev_Final
             graphics.ApplyChanges();
 
             input = new Input();
+            menu = new Menu(ScreenWidth, ScreenHeight);
 
             base.Initialize();
         }
@@ -87,8 +85,6 @@ namespace ThibautHumblet_GameDev_Final
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("Fonts/Font");
-            gameOverFont = Content.Load<SpriteFont>("Fonts/GameOverFont");
 
             _camera = new Camera();
 
@@ -127,8 +123,7 @@ namespace ThibautHumblet_GameDev_Final
             laag06 = Content.Load<Texture2D>("_06_hill2");
             laag11 = Content.Load<Texture2D>("_11_background");
 
-            // title screen inladen
-            titleScreen = Content.Load<Texture2D>("TitleScreen");
+            menu.Load(Content);
 
             Sound.Load(Content);
             MediaPlayer.Play(Sound.music);
@@ -162,6 +157,7 @@ namespace ThibautHumblet_GameDev_Final
                     _state.LoadContent();
 
             _state.Update(gameTime);
+            menu.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -174,19 +170,11 @@ namespace ThibautHumblet_GameDev_Final
         {
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            menu.Draw(spriteBatch);
+            spriteBatch.End();
 
-            if (mainMenu)
-            {
-                spriteBatch.Begin();
-                spriteBatch.Draw(titleScreen, new Rectangle(0, 0, ScreenWidth, ScreenHeight), null, Color.White);
-                if (Player.Dead)
-                    spriteBatch.DrawString(gameOverFont, "GAME OVER", new Vector2((ScreenWidth/2.7f), 300), Color.White);
-                else
-                    spriteBatch.DrawString(font, "Druk op ENTER om het spel te starten", new Vector2(90, 600), Color.White);
-                spriteBatch.DrawString(font, "Druk op ESCAPE om het spel af te sluiten", new Vector2(90, 640), Color.White);
-                spriteBatch.End();
-            }
-            else
+            if (!mainMenu)
             {
                 #region Parralax Background
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap); // dit zorgt ervoor dat de achtergrond eindeloos blijft doorscrollen

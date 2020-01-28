@@ -20,7 +20,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         private bool _jumping = false;
 
-        public static bool Dead = false;
+        public static bool IsDead = false;
 
         public Vector2 Velocity;
         public float Parallaxscroll;
@@ -36,7 +36,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (Game1.mainMenu && !Dead && _input.Keypress(Keys.Enter))
+            if (Game1.mainMenu && !IsDead && _input.Keypress(Keys.Enter))
                 Game1.mainMenu = false;
             if (!Game1.mainMenu && _input.Keypress(Keys.Escape))
                 Game1.mainMenu = true;
@@ -45,7 +45,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             {
                 if (Velocity.Y >= 0)
                     _jumping = false;
-                if (!Dead)
+                if (!IsDead)
                 {
                     if (_isOnGround)
                     {
@@ -102,7 +102,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         private void SetAnimation()
         {
-            if (!Dead)
+            if (!IsDead)
             {
                 if (Velocity.Y < 0)
                 {
@@ -222,7 +222,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
                     if (platform.TileType == TileTypes.Spike)
                     {
-                        Dead = true;
+                        IsDead = true;
                     }
                     break;
 
