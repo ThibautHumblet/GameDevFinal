@@ -23,6 +23,7 @@ namespace ThibautHumblet_GameDev_Final
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private SpriteFont font;
+        private SpriteFont gameOverFont;
 
         // display
         public static int ScreenWidth = 1280;
@@ -86,7 +87,8 @@ namespace ThibautHumblet_GameDev_Final
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("Font");
+            font = Content.Load<SpriteFont>("Fonts/Font");
+            gameOverFont = Content.Load<SpriteFont>("Fonts/GameOverFont");
 
             _camera = new Camera();
 
@@ -107,7 +109,7 @@ namespace ThibautHumblet_GameDev_Final
                 { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
                 { "JumpStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpStart"), 5) },
                 { "JumpEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpEnd"), 4) },
-                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8, 0.4f, false) }
+                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8, 0.17f, false) }
       })
         {
             Position = StartingPosition,
@@ -177,6 +179,8 @@ namespace ThibautHumblet_GameDev_Final
             {
                 spriteBatch.Begin();
                 spriteBatch.Draw(titleScreen, new Rectangle(0, 0, ScreenWidth, ScreenHeight), null, Color.White);
+                if (Player.Dead)
+                    spriteBatch.DrawString(gameOverFont, "GAME OVER", new Vector2((ScreenWidth/2.7f), 300), Color.White);
                 spriteBatch.DrawString(font, "Druk op ENTER om het spel te starten", new Vector2(90, 600), Color.White);
                 spriteBatch.DrawString(font, "Druk op ESCAPE om het spel af te sluiten", new Vector2(90, 640), Color.White);
                 spriteBatch.End();

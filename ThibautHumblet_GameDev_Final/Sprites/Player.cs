@@ -20,7 +20,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         private bool _jumping = false;
 
-        public bool Dead = false;
+        public static bool Dead = false;
 
         public Vector2 Velocity;
         public float Parallaxscroll;
