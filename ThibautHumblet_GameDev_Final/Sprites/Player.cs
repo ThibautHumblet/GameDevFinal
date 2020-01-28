@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Animations;
+using ThibautHumblet_GameDev_Final.Sounds;
 using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final.Sprites
@@ -35,7 +36,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (Game1.mainMenu && _input.Keypress(Keys.Enter))
+            if (Game1.mainMenu && !Dead && _input.Keypress(Keys.Enter))
                 Game1.mainMenu = false;
             if (!Game1.mainMenu && _input.Keypress(Keys.Escape))
                 Game1.mainMenu = true;
@@ -51,6 +52,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     {
                         Velocity.Y = -12f;
                         _jumping = true;
+                        Sound.jump.Play();
                     }
                 }
                 else
