@@ -75,9 +75,12 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public void ApplyVelocity(GameTime gameTime)
         {
-            //Position = new Vector2(Position.X, Position.Y + Velocity.Y);
-            this.Y += Velocity.Y;
-            this.X += Velocity.X;
+            if (!Game1.mainMenu)
+            {
+                //Position = new Vector2(Position.X, Position.Y + Velocity.Y);
+                this.Y += Velocity.Y;
+                this.X += Velocity.X;
+            }
         }
 
         private void SetAnimation()
@@ -161,16 +164,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             var rotation = (float)Math.Atan2(test.Y, test.X);
 
             var rotation2 = Math.Abs(MathHelper.ToDegrees(rotation));
-
-            if (rotation2 > 89 || rotation2 < 91)
-            {
-
-            }
-
-            if (sprite.Y == 640)
-            {
-
-            }
 
             bool onLeft = false;
             bool onRight = false;
