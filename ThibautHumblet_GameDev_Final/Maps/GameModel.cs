@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThibautHumblet_GameDev_Final.Map
+namespace ThibautHumblet_GameDev_Final.Maps
 {
     public class GameModel
     {

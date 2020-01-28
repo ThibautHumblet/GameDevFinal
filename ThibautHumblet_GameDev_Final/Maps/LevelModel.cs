@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.ParallaxBackground;
 using ThibautHumblet_GameDev_Final.Sprites;
 
-namespace ThibautHumblet_GameDev_Final.Map
+namespace ThibautHumblet_GameDev_Final.Maps
 {
     public class LevelModel
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ThibautHumblet_GameDev_Final.Animations;
 using ThibautHumblet_GameDev_Final.Cameras;
-using ThibautHumblet_GameDev_Final.Map;
+using ThibautHumblet_GameDev_Final.Maps;
 using ThibautHumblet_GameDev_Final.Sounds;
 using ThibautHumblet_GameDev_Final.Sprites;
 using ThibautHumblet_GameDev_Final.UserInterface;
@@ -46,7 +46,7 @@ namespace ThibautHumblet_GameDev_Final
         static public bool mainMenu = true;
 
         public static Player Player;
-        public static Vector2 StartingPosition = new Vector2(300, 0);
+        public static Vector2 StartingPosition = new Vector2(1500,0);
 
         private Camera _camera;
 
@@ -181,7 +181,8 @@ namespace ThibautHumblet_GameDev_Final
                 spriteBatch.Draw(titleScreen, new Rectangle(0, 0, ScreenWidth, ScreenHeight), null, Color.White);
                 if (Player.Dead)
                     spriteBatch.DrawString(gameOverFont, "GAME OVER", new Vector2((ScreenWidth/2.7f), 300), Color.White);
-                spriteBatch.DrawString(font, "Druk op ENTER om het spel te starten", new Vector2(90, 600), Color.White);
+                else
+                    spriteBatch.DrawString(font, "Druk op ENTER om het spel te starten", new Vector2(90, 600), Color.White);
                 spriteBatch.DrawString(font, "Druk op ESCAPE om het spel af te sluiten", new Vector2(90, 640), Color.White);
                 spriteBatch.End();
             }
