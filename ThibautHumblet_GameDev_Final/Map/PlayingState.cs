@@ -63,10 +63,11 @@ namespace ThibautHumblet_GameDev_Final.Map
                     default:
                         return new List<string>()
                         {
-                            "1000",
-                            "0011",
-                            "0000",
-                            "11111111111"
+                            "10000",
+                            "0001100000",
+                            "0010000000",
+                            "11111100111",
+                            "444114!!144"
                         };
                 }
 
@@ -134,6 +135,10 @@ namespace ThibautHumblet_GameDev_Final.Map
                         case '^':
                             _texture = _content.Load<Texture2D>("board04");
                             _tileType = TileTypes.Safe;
+                            break;
+                        case '!':
+                            _texture = _content.Load<Texture2D>("spikes");
+                            _tileType = TileTypes.Spike;
                             break;
                         case '%':
                             if (!Crystal.gotCrystal1)
@@ -250,6 +255,7 @@ namespace ThibautHumblet_GameDev_Final.Map
                             }
                             LoadContent();
                         }
+
                     }
 
 

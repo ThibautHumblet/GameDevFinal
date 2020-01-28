@@ -18,6 +18,8 @@ namespace ThibautHumblet_GameDev_Final.Animations
 
         private bool _updated;
 
+        public static bool DonePlaying;
+
         public int FrameWidth
         {
             get
@@ -85,6 +87,7 @@ namespace ThibautHumblet_GameDev_Final.Animations
 
         public void Update(GameTime gameTime)
         {
+            DonePlaying = false;
             _updated = true;
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -96,7 +99,10 @@ namespace ThibautHumblet_GameDev_Final.Animations
                 _animation.CurrentFrame++;
 
                 if (_animation.CurrentFrame >= _animation.FrameCount)
+                {
+                    DonePlaying = true;
                     _animation.CurrentFrame = 0;
+                }
             }
         }
     }

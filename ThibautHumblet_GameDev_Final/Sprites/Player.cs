@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Animations;
 using ThibautHumblet_GameDev_Final.UserInterface;
@@ -17,6 +18,8 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         private bool _isOnGround = false;
 
         private bool _jumping = false;
+
+        public bool Dead = false;
 
         public Vector2 Velocity;
         public float Parallaxscroll;
@@ -101,9 +104,16 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             {
                 _animationManager.Play(_animations["Walk"]);
             }
-            else
+            else if (!Dead)
             {
                 _animationManager.Play(_animations["Idle"]);
+            }
+            
+            if (Dead)
+            {
+                _animationManager.Play(_animations["Dead"]);
+                if (AnimationManager.DonePlaying)
+                Game1.mainMenu = true;
             }
         }
 
@@ -237,6 +247,11 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     {
                         _isOnGround = false;
                         this.Y = platform.Rectangle.Bottom + this.Rectangle.Height;
+                    }
+
+                    if (platform.TileType == TileTypes.Spike)
+                    {
+                        Dead = true;
                     }
 
 
