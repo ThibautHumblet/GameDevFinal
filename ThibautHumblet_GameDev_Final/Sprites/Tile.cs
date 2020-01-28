@@ -11,7 +11,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 {
     public enum TileTypes
     {
-        Dangerous,
+        Crystal,
         Safe,
         Empty,
     }

@@ -32,37 +32,45 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            if (Velocity.Y >= 0)
-                _jumping = false;
+            if (Game1.mainMenu && _input.Keypress(Keys.Enter))
+                Game1.mainMenu = false;
+            if (!Game1.mainMenu && _input.Keypress(Keys.Escape))
+                Game1.mainMenu = true;
 
-            if (_isOnGround)
+            if (!Game1.mainMenu)
             {
-                if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                if (Velocity.Y >= 0)
+                    _jumping = false;
+
+                if (_isOnGround)
                 {
-                    Velocity.Y = -12f;
-                    _jumping = true;
+                    if (_input.Keypress(Keys.Space) || _input.Keypress(Keys.Up))
+                    {
+                        Velocity.Y = -12f;
+                        _jumping = true;
+                    }
                 }
-            }
-            else
-            {
-                Velocity.Y += 0.50f;
-            }
-            if (_input.Keydown(Keys.Left))
-            {
-                _position.X -= 6;
-                Game1.AchtergrondPositie.X--;
-            }
-            else if (_input.Keydown(Keys.Right))
-            {
-                _position.X += 6;
-                Game1.AchtergrondPositie.X++;
-            }
+                else
+                {
+                    Velocity.Y += 0.50f;
+                }
+                if (_input.Keydown(Keys.Left))
+                {
+                    _position.X -= 6;
+                    Game1.AchtergrondPositie.X--;
+                }
+                else if (_input.Keydown(Keys.Right))
+                {
+                    _position.X += 6;
+                    Game1.AchtergrondPositie.X++;
+                }
 
-            SetAnimation();
+                SetAnimation();
 
-            _animationManager.Update(gameTime);
+                _animationManager.Update(gameTime);
 
-            _isOnGround = false;
+                _isOnGround = false;
+            }
         }
 
         public void ApplyVelocity(GameTime gameTime)

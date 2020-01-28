@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Components;
+using ThibautHumblet_GameDev_Final.Crystals;
 using ThibautHumblet_GameDev_Final.Interfaces;
 using ThibautHumblet_GameDev_Final.Sprites;
 
 namespace ThibautHumblet_GameDev_Final.Map
 {
+    enum CrystalType { Crystal1, Crystal2, Crystal3, Crystal4, Empty};
     public class PlayingState: State
     {
         private LevelModel _level;
@@ -26,11 +28,19 @@ namespace ThibautHumblet_GameDev_Final.Map
 
         private Texture2D _texture;
 
+        private CrystalType _crystalType;
+
+        private Crystal _crystal = new Crystal();
+
         private List<string> _map
         {
             get
             {
-                return new List<string>()
+                switch (Game1.Level)
+                {
+                    case 0:
+                        Crystal.ResetCrystals();
+                        return new List<string>()
                 {
                     "00000000000000000000000110000000000000",
                     "04000010000000000000011000000000000000",
@@ -38,8 +48,27 @@ namespace ThibautHumblet_GameDev_Final.Map
                     "11111111111111111110000000000111111111",
                     "11112221121112211112211111112211111211",
                     "66622211655521551152566215662215111211"
-
                 };
+                    case 1:
+                        return new List<string>()
+                {
+                            "4444004001401001"
+                };
+                    case 2:
+                        return new List<string>()
+                {
+                            "000*0£0$00%0",
+                            "111111111144"
+                };
+                    default:
+                        return new List<string>()
+                        {
+                            "0000",
+                            "0000",
+                            "1111"
+                        };
+                }
+
             }
         }
 
@@ -106,20 +135,43 @@ namespace ThibautHumblet_GameDev_Final.Map
                             _tileType = TileTypes.Safe;
                             break;
                         case '%':
-                            _texture = _content.Load<Texture2D>("crystal02");
-                            _tileType = TileTypes.Safe;
+                            if (!Crystal.gotCrystal1)
+                            {
+                                _texture = _content.Load<Texture2D>("crystal01");
+                                _crystalType = CrystalType.Crystal1;
+                                _tileType = TileTypes.Crystal;
+                            }
+                            else
+                                continue;
                             break;
                         case '*':
-                            _texture = _content.Load<Texture2D>("crystal02");
-                            _tileType = TileTypes.Safe;
+                            if (!Crystal.gotCrystal2)
+                            {
+                                _texture = _content.Load<Texture2D>("crystal02");
+                                _crystalType = CrystalType.Crystal2;
+                                _tileType = TileTypes.Crystal;
+                            } else
+                                continue;
                             break;
                         case '$':
-                            _texture = _content.Load<Texture2D>("crystal03");
-                            _tileType = TileTypes.Safe;
+                            if (!Crystal.gotCrystal3)
+                            {
+                                _texture = _content.Load<Texture2D>("crystal03");
+                                _crystalType = CrystalType.Crystal3;
+                                _tileType = TileTypes.Crystal;
+                            }
+                            else
+                                continue;
                             break;
                         case '£':
-                            _texture = _content.Load<Texture2D>("crystal04");
-                            _tileType = TileTypes.Safe;
+                            if (!Crystal.gotCrystal4)
+                            {
+                                _texture = _content.Load<Texture2D>("crystal04");
+                                _crystalType = CrystalType.Crystal4;
+                                _tileType = TileTypes.Crystal;
+                            }
+                            else
+                                continue;
                             break;
                         default:
                             continue;
@@ -172,10 +224,30 @@ namespace ThibautHumblet_GameDev_Final.Map
                     {
                         var platform = (Tile)spriteA;
 
-                        if (platform.TileType == TileTypes.Dangerous)
+                        if (platform.TileType == TileTypes.Crystal)
                         {
+                            switch (_crystalType)
+                            {
+                                case CrystalType.Crystal1:
+                                    Crystal.gotCrystal1 = true;
+                                    _crystalType = CrystalType.Empty;
+                                    break;
+                                case CrystalType.Crystal2:
+                                    Crystal.gotCrystal2 = true;
+                                    _crystalType = CrystalType.Empty;
+                                    break;
+                                case CrystalType.Crystal3:
+                                    Crystal.gotCrystal3 = true;
+                                    _crystalType = CrystalType.Empty;
+                                    break;
+                                case CrystalType.Crystal4:
+                                    Crystal.gotCrystal4 = true;
+                                    _crystalType = CrystalType.Empty;
+                                    break;
+                                default:
+                                    break;
+                            }
                             LoadContent();
-                            break;
                         }
                     }
 

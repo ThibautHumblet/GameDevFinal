@@ -46,6 +46,7 @@
     <Compile Include="BuildingBlocks\SpriteClass.cs" />
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Components\Component.cs" />
+    <Compile Include="Crystals\Crystal.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Interfaces\IMovable.cs" />
     <Compile Include="Map\GameModel.cs" />

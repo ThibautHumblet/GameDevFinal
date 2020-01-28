@@ -11,6 +11,8 @@ using ThibautHumblet_GameDev_Final.UserInterface;
 
 namespace ThibautHumblet_GameDev_Final
 {
+
+    public enum Level { level1, level2}
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -18,6 +20,7 @@ namespace ThibautHumblet_GameDev_Final
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private SpriteFont font;
 
         // display
         public static int ScreenWidth = 1280;
@@ -25,16 +28,19 @@ namespace ThibautHumblet_GameDev_Final
         static public int schermB, schermH;
 
         // achtergrond parralax scrolling
-        Texture2D laag01, laag02, laag03, laag04, laag05, laag06, laag07, laag08, laag09, laag10, laag11;
+        Texture2D laag01, laag02, laag03, laag04, laag05, laag06, laag11, titleScreen;
         static public Vector2 AchtergrondPositie;
-        static public Vector2 WolkenPositie_7, WolkenPositie_8, WolkenPositie_9, WolkenPositie_10;
 
         // input
         Input input;
 
         private State _currentState;
         private GameModel _gameModel;
-        private LevelModel _level1;
+        private LevelModel _level;
+
+        public static int Level = 2;
+
+        static public bool mainMenu = true;
 
         private Player player;
 
@@ -77,6 +83,7 @@ namespace ThibautHumblet_GameDev_Final
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("Font");
 
             _camera = new Camera();
 
@@ -106,7 +113,7 @@ namespace ThibautHumblet_GameDev_Final
             Layer = 1f,
         };
 
-            _level1 = new LevelModel(player);
+            _level = new LevelModel(player);
 
         // parallax achtergrond inladen
             laag01 = Content.Load<Texture2D>("_01_ground");
@@ -115,12 +122,10 @@ namespace ThibautHumblet_GameDev_Final
             laag04 = Content.Load<Texture2D>("_04_bushes");
             laag05 = Content.Load<Texture2D>("_05_hill1");
             laag06 = Content.Load<Texture2D>("_06_hill2");
-            laag07 = Content.Load<Texture2D>("_07_huge_clouds");
-            laag08 = Content.Load<Texture2D>("_08_clouds");
-            laag09 = Content.Load<Texture2D>("_09_distant_clouds1");
-            laag10 = Content.Load<Texture2D>("_10_distant_clouds");
             laag11 = Content.Load<Texture2D>("_11_background");
 
+            // title screen inladen
+            titleScreen = Content.Load<Texture2D>("TitleScreen");
         }
 
         /// <summary>
@@ -140,14 +145,14 @@ namespace ThibautHumblet_GameDev_Final
         protected override void Update(GameTime gameTime)
         {
             input.Update();
-            if (input.Keypress(Keys.Escape))
+            if (mainMenu && input.Keypress(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
 
             _camera.Follow(player);
 
-            _currentState = new PlayingState(_gameModel, _level1);
+            _currentState = new PlayingState(_gameModel, _level);
                     _currentState.LoadContent();
 
             _currentState.Update(gameTime);
@@ -161,24 +166,35 @@ namespace ThibautHumblet_GameDev_Final
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
 
-            #region Parralax Background
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap); // dit zorgt ervoor dat de achtergrond eindeloos blijft doorscrollen
-            spriteBatch.Draw(laag11, new Rectangle(0, -700, laag11.Width, laag11.Height), Color.White);
-            spriteBatch.Draw(laag06, new Rectangle(0, -700, laag06.Width, laag06.Height), Color.White);
-            spriteBatch.Draw(laag05, new Rectangle(0, -700, laag05.Width, laag05.Height), Color.White);
-            spriteBatch.Draw(laag04, new Rectangle((int)(-AchtergrondPositie.X * 0.45f), -700, laag04.Width, laag04.Height), Color.White);
-            spriteBatch.Draw(laag03, new Rectangle((int)(-AchtergrondPositie.X * 0.5f), -700, laag03.Width, laag03.Height), Color.White);
-            spriteBatch.Draw(laag02, new Rectangle((int)(-AchtergrondPositie.X * 0.6f), -700, laag02.Width, laag02.Height), Color.White);
-            spriteBatch.Draw(laag01, new Rectangle((int)(-AchtergrondPositie.X), -700, laag01.Width, laag01.Height), Color.White);
-            spriteBatch.End();
-            #endregion
+            if (mainMenu)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(titleScreen, new Rectangle(0, 0, ScreenWidth, ScreenHeight), null, Color.White);
+                spriteBatch.DrawString(font, "Druk op ENTER om het spel te starten", new Vector2(90, 600), Color.White);
+                spriteBatch.DrawString(font, "Druk op ESCAPE om het spel af te sluiten", new Vector2(90, 640), Color.White);
+                spriteBatch.End();
+            }
+            else
+            {
+                #region Parralax Background
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap); // dit zorgt ervoor dat de achtergrond eindeloos blijft doorscrollen
+                spriteBatch.Draw(laag11, new Rectangle(0, -700, laag11.Width, laag11.Height), Color.White);
+                spriteBatch.Draw(laag06, new Rectangle(0, -700, laag06.Width, laag06.Height), Color.White);
+                spriteBatch.Draw(laag05, new Rectangle(0, -700, laag05.Width, laag05.Height), Color.White);
+                spriteBatch.Draw(laag04, new Rectangle((int)(-AchtergrondPositie.X * 0.45f), -700, laag04.Width, laag04.Height), Color.White);
+                spriteBatch.Draw(laag03, new Rectangle((int)(-AchtergrondPositie.X * 0.5f), -700, laag03.Width, laag03.Height), Color.White);
+                spriteBatch.Draw(laag02, new Rectangle((int)(-AchtergrondPositie.X * 0.6f), -700, laag02.Width, laag02.Height), Color.White);
+                spriteBatch.Draw(laag01, new Rectangle((int)(-AchtergrondPositie.X), -700, laag01.Width, laag01.Height), Color.White);
+                spriteBatch.End();
+                #endregion
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Transform);
-            _currentState.Draw(gameTime);
-            spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Transform);
+                _currentState.Draw(gameTime);
+                spriteBatch.End();
+            }
 
 
 
