@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Animations;
-using ThibautHumblet_GameDev_Final.Maps;
 using ThibautHumblet_GameDev_Final.Sounds;
 using ThibautHumblet_GameDev_Final.UserInterface;
 
