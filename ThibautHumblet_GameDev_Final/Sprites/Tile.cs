@@ -14,6 +14,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         Crystal,
         Safe,
         Empty,
+        Spike
     }
 
     public class Tile : Sprite, IMoveable
@@ -31,9 +32,6 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         public override void Update(GameTime gameTime)
         {
             Position += Velocity;
-
-            if (Rectangle.Right < 0)
-                IsRemoved = false;
         }
     }
 }

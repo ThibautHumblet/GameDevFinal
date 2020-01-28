@@ -101,12 +101,12 @@ namespace ThibautHumblet_GameDev_Final
             // player inladen
             player = new Player(input, new Dictionary<string, Animation>()
       {
-                { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10, 0.1f) },
+                { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10, 0.1f, true) },
                 { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
                 { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
                 { "JumpStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpStart"), 5) },
                 { "JumpEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpEnd"), 4) },
-                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8) },
+                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8, 0.4f, false) }
       })
         {
             Position = new Vector2(300, 100),

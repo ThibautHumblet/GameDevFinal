@@ -207,7 +207,9 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (_texture != null)
+            {
                 spriteBatch.Draw(_texture, Position, null, Colour * Opacity, Rotation, Origin, Scale, SpriteEffects.None, Layer);
+            }
 
             if (_animationManager != null)
                 _animationManager.Draw(spriteBatch);
