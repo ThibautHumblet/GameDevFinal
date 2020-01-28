@@ -296,6 +296,12 @@
 /processorParam:TextureFormat=Color
 /build:leafy_ground02.png
 
+#begin Music/Music1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Music1.mp3
+
 #begin noTexture.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -331,6 +337,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:rocky03.png
+
+#begin Sound/Jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Jump.wav
 
 #begin spike.png
 /importer:TextureImporter

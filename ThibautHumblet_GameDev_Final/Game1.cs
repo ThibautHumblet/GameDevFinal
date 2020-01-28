@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Linq;
 using ThibautHumblet_GameDev_Final.Animations;
 using ThibautHumblet_GameDev_Final.Cameras;
 using ThibautHumblet_GameDev_Final.Map;
+using ThibautHumblet_GameDev_Final.Sounds;
 using ThibautHumblet_GameDev_Final.Sprites;
 using ThibautHumblet_GameDev_Final.UserInterface;
 
@@ -126,6 +128,9 @@ namespace ThibautHumblet_GameDev_Final
 
             // title screen inladen
             titleScreen = Content.Load<Texture2D>("TitleScreen");
+
+            Sound.Load(Content);
+            MediaPlayer.Play(Sound.music);
         }
 
         /// <summary>
