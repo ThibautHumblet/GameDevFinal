@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IMovable.cs" />
     <Compile Include="Maps\GameModel.cs" />
     <Compile Include="Maps\LevelModel.cs" />
+    <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\PlayingState.cs" />
     <Compile Include="Maps\State.cs" />
     <Compile Include="ParallaxBackground\Parallax.cs" />
