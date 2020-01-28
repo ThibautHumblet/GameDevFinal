@@ -315,6 +315,12 @@
 /processorParam:Quality=Best
 /build:Sound/Jump.wav
 
+#begin Sound/WorldShift.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/WorldShift.wav
+
 #begin spike.png
 /importer:TextureImporter
 /processor:TextureProcessor

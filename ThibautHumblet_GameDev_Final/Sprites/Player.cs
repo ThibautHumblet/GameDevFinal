@@ -75,6 +75,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
 
                     if (_input.Keypress(Keys.RightControl))
                     {
+                        Sound.worldShift.Play();
                         if (WorldShift == false)
                             WorldShift = true;
                         else
