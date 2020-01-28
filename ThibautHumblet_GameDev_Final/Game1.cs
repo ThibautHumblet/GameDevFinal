@@ -39,11 +39,10 @@ namespace ThibautHumblet_GameDev_Final
         public static int Level = 0;
 
         static public bool mainMenu = true;
-        static public bool gewonnen = true;
+        static public bool gewonnen = false;
 
         public static Player Player;
-        //public static Vector2 StartingPosition = new Vector2(1500,0);
-        public static Vector2 StartingPosition = new Vector2(8000, 0);
+        public static Vector2 StartingPosition = new Vector2(1500,0);
 
         private Camera _camera;
 
