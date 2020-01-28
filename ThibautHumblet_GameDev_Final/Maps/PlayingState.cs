@@ -125,7 +125,10 @@ namespace ThibautHumblet_GameDev_Final.Maps
         public override void Update(GameTime gameTime)
         {
             if (Game1.Level > _map.Load().Count)
+            {
                 Game1.gewonnen = true;
+                Game1.mainMenu = true;
+            }
 
             foreach (var component in _components)
                 component.Update(gameTime);

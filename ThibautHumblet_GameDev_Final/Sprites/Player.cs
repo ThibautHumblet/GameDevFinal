@@ -19,6 +19,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         private bool _isOnGround = false;
 
         private bool _jumping = false;
+        private bool _flip = false;
 
         public static bool IsDead = false;
 
@@ -41,7 +42,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
             if (!Game1.mainMenu && _input.Keypress(Keys.Escape))
                 Game1.mainMenu = true;
 
-            if (!Game1.mainMenu || !Game1.gewonnen)
+            if (!Game1.mainMenu)
             {
                 if (Velocity.Y >= 0)
                     _jumping = false;
@@ -62,12 +63,14 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                     }
                     if (_input.Keydown(Keys.Left))
                     {
+                        _flip = true;
                         _position.X -= 6;
                         if (!isCollidingLeft)
                             Game1.AchtergrondPositie.X--;
                     }
                     else if (_input.Keydown(Keys.Right))
                     {
+                        _flip = false;
                         _position.X += 6;
                         if (!isCollidingRight)
                             Game1.AchtergrondPositie.X++;
@@ -104,31 +107,49 @@ namespace ThibautHumblet_GameDev_Final.Sprites
         {
             if (!IsDead)
             {
-                if (Velocity.Y < 0)
+                if (Velocity.Y < 0 && !_flip)
                 {
-                    _animationManager.Play(_animations["JumpStart"]);
+                    _animationManager.Play(_animations["JumpRightStart"]);
                 }
-                else if (Velocity.Y > 0)
+                else if (Velocity.Y < 0 && _flip)
                 {
-                    _animationManager.Play(_animations["JumpEnd"]);
+                    _animationManager.Play(_animations["JumpLeftStart"]);
+                }
+                else if (Velocity.Y > 0 && !_flip)
+                {
+                    _animationManager.Play(_animations["JumpRightEnd"]);
+                }
+                else if (Velocity.Y > 0 && !_flip)
+                {
+                    _animationManager.Play(_animations["JumpLeftEnd"]);
                 }
                 else if (_input.Keydown(Keys.Right))
                 {
-                    _animationManager.Play(_animations["Walk"]);
+                    _animationManager.Play(_animations["WalkRight"]);
                 }
                 else if (_input.Keydown(Keys.Left))
                 {
-                    _animationManager.Play(_animations["Walk"]);
+                    _animationManager.Play(_animations["WalkLeft"]);
                 }
-                else
+                else if (!_flip)
                 {
-                    _animationManager.Play(_animations["Idle"]);
+                    _animationManager.Play(_animations["IdleRight"]);
                 }
-            } else
+                else if (_flip)
+                {
+                    _animationManager.Play(_animations["IdleLeft"]);
+                }
+            } else if (!_flip)
             {
-                _animationManager.Play(_animations["Dead"]);
+                _animationManager.Play(_animations["DeadRight"]);
                 if (AnimationManager.DonePlaying)
                 Game1.mainMenu = true;
+            }
+            else
+            {
+                _animationManager.Play(_animations["DeadLeft"]);
+                if (AnimationManager.DonePlaying)
+                    Game1.mainMenu = true;
             }
         }
 

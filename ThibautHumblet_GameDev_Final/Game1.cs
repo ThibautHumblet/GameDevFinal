@@ -36,7 +36,7 @@ namespace ThibautHumblet_GameDev_Final
         private GameModel _gameModel;
         private LevelModel _level;
 
-        public static int Level = 0;
+        public static int Level = 1;
 
         static public bool mainMenu = true;
         static public bool gewonnen = false;
@@ -101,12 +101,16 @@ namespace ThibautHumblet_GameDev_Final
             // player inladen
             Player = new Player(input, new Dictionary<string, Animation>()
       {
-                { "Walk", new Animation(Content.Load<Texture2D>("SpritesheetWalk"), 10, 0.1f, true) },
-                { "Run", new Animation(Content.Load<Texture2D>("SpritesheetRun"), 8) },
-                { "Idle", new Animation(Content.Load<Texture2D>("SpritesheetIdle"), 10) },
-                { "JumpStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpStart"), 5) },
-                { "JumpEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpEnd"), 4) },
-                { "Dead", new Animation(Content.Load<Texture2D>("SpritesheetDead"), 8, 0.17f, false) }
+                { "WalkRight", new Animation(Content.Load<Texture2D>("SpritesheetWalkRight"), 10, 0.1f, true) },
+                { "WalkLeft", new Animation(Content.Load<Texture2D>("SpritesheetWalkLeft"), 10, 0.1f, true) },
+                { "IdleRight", new Animation(Content.Load<Texture2D>("SpritesheetIdleRight"), 10) },
+                { "IdleLeft", new Animation(Content.Load<Texture2D>("SpritesheetIdleLeft"), 10) },
+                { "JumpRightStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpRightStart"), 5) },
+                { "JumpLeftStart", new Animation(Content.Load<Texture2D>("SpritesheetJumpLeftStart"), 5) },
+                { "JumpRightEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpRightEnd"), 4) },
+                { "JumpLeftEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpLeftEnd"), 4) },
+                { "DeadRight", new Animation(Content.Load<Texture2D>("SpritesheetDeadRight"), 8, 0.17f, false) },
+                { "DeadLeft", new Animation(Content.Load<Texture2D>("SpritesheetDeadLeft"), 8, 0.17f, false) }
       })
         {
             Position = StartingPosition,
