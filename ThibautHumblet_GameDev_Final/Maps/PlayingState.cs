@@ -54,6 +54,8 @@ namespace ThibautHumblet_GameDev_Final.Maps
 
                     switch (character)
                     {
+                        case '0':
+                            continue;
                         case '1':
                             _texture = _content.Load<Texture2D>("ground05");
                             _tileType = TileTypes.Safe;
@@ -99,7 +101,9 @@ namespace ThibautHumblet_GameDev_Final.Maps
                                 _tileType = TileTypes.Crystal;
                             break;
                         default:
-                            continue;
+                            _texture = _content.Load<Texture2D>("noTexture");
+                            _tileType = TileTypes.Safe;
+                            break;
                     }
 
                     var platform = new Tile(_texture)
