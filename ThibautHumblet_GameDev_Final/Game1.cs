@@ -30,23 +30,26 @@ namespace ThibautHumblet_GameDev_Final
         static public Vector2 AchtergrondPositie;
 
         // input
-        Input input;
+        private Input _input;
 
+        // game
         private State _state;
         private GameModel _gameModel;
         private LevelModel _level;
-
         public static int Level = 0;
 
         static public bool mainMenu = true;
         static public bool gewonnen = false;
 
+        // player
         public static Player Player;
         public static Vector2 StartingPosition = new Vector2(1500,0);
 
+        // camera
         private Camera _camera;
 
-        private Menu menu;
+        // menu
+        private Menu _menu;
 
         public Game1()
         {
@@ -66,14 +69,13 @@ namespace ThibautHumblet_GameDev_Final
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.ApplyChanges();
 
-            input = new Input();
-            menu = new Menu(ScreenWidth, ScreenHeight);
+            _input = new Input();
+            _menu = new Menu(ScreenWidth, ScreenHeight);
 
             base.Initialize();
         }
@@ -87,10 +89,10 @@ namespace ThibautHumblet_GameDev_Final
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            // camera inladen
             _camera = new Camera();
 
-            // TODO: use this.Content to load your game content here
-
+            // gamemodel inladen
             _gameModel = new GameModel()
             {
                 ContentManger = Content,
@@ -99,8 +101,8 @@ namespace ThibautHumblet_GameDev_Final
             };
 
             // player inladen
-            Player = new Player(input, new Dictionary<string, Animation>()
-      {
+            Player = new Player(_input, new Dictionary<string, Animation>()
+            {
                 { "WalkRight", new Animation(Content.Load<Texture2D>("SpritesheetWalkRight"), 10, 0.1f, true) },
                 { "WalkLeft", new Animation(Content.Load<Texture2D>("SpritesheetWalkLeft"), 10, 0.1f, true) },
                 { "IdleRight", new Animation(Content.Load<Texture2D>("SpritesheetIdleRight"), 10) },
@@ -111,11 +113,11 @@ namespace ThibautHumblet_GameDev_Final
                 { "JumpLeftEnd", new Animation(Content.Load<Texture2D>("SpritesheetJumpLeftEnd"), 4) },
                 { "DeadRight", new Animation(Content.Load<Texture2D>("SpritesheetDeadRight"), 8, 0.17f, false) },
                 { "DeadLeft", new Animation(Content.Load<Texture2D>("SpritesheetDeadLeft"), 8, 0.17f, false) }
-      })
-        {
-            Position = StartingPosition,
-            Layer = 1f,
-        };
+                })
+            {
+                Position = StartingPosition,
+                Layer = 1f,
+            };
 
             _level = new LevelModel(Player);
 
@@ -128,8 +130,10 @@ namespace ThibautHumblet_GameDev_Final
             laag06 = Content.Load<Texture2D>("_06_hill2");
             laag11 = Content.Load<Texture2D>("_11_background");
 
-            menu.Load(Content);
+            // menu inladen
+            _menu.Load(Content);
 
+            // muziek en geluiden inladen
             Sound.Load(Content);
             MediaPlayer.Play(Sound.music);
         }
@@ -138,10 +142,6 @@ namespace ThibautHumblet_GameDev_Final
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
         /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -150,11 +150,10 @@ namespace ThibautHumblet_GameDev_Final
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            input.Update();
-            if (mainMenu && input.Keypress(Keys.Escape))
-                Exit();
+            _input.Update();
 
-            // TODO: Add your update logic here
+            if (mainMenu && _input.Keypress(Keys.Escape))
+                Exit();
 
             _camera.Follow(Player);
 
@@ -173,9 +172,9 @@ namespace ThibautHumblet_GameDev_Final
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            // TODO: Add your drawing code here
+
             spriteBatch.Begin();
-            menu.Draw(spriteBatch);
+            _menu.Draw(spriteBatch);
             spriteBatch.End();
 
             if (!mainMenu)

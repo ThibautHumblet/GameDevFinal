@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ThibautHumblet_GameDev_Final.Components;
 using ThibautHumblet_GameDev_Final.Interfaces;
 using ThibautHumblet_GameDev_Final.Sprites;

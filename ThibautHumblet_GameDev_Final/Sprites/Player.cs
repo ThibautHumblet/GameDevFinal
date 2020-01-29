@@ -119,7 +119,7 @@ namespace ThibautHumblet_GameDev_Final.Sprites
                 {
                     _animationManager.Play(_animations["JumpRightEnd"]);
                 }
-                else if (Velocity.Y > 0 && !_flip)
+                else if (Velocity.Y > 0 && _flip)
                 {
                     _animationManager.Play(_animations["JumpLeftEnd"]);
                 }
